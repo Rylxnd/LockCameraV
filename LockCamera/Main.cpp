@@ -27,14 +27,19 @@ void OnTick()
 {
 	if (ms_bEnabled)
 	{
-		if (PED::IS_PED_IN_ANY_VEHICLE(PLAYER::PLAYER_PED_ID(), false))
+		//Fix camera jitteriness
+		if (!PLAYER::IS_PLAYER_FREE_AIMING(0))
 		{
-			CAM::_SET_GAMEPLAY_CAM_RELATIVE_ROTATION(0, 0, 0);
+			PAD::DISABLE_CONTROL_ACTION(0, 1, true);
+			PAD::DISABLE_CONTROL_ACTION(0, 2, true);
 		}
 		else
 		{
-			CAM::SET_GAMEPLAY_CAM_RELATIVE_HEADING(0);
+			PAD::ENABLE_CONTROL_ACTION(0, 1, true);
+			PAD::ENABLE_CONTROL_ACTION(0, 2, true);
 		}
+
+		CAM::_SET_GAMEPLAY_CAM_RELATIVE_ROTATION(0, 0, 0);
 	}
 
 	if (currentDrawTime <= DRAW_TIME)
